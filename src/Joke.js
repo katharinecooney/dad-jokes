@@ -7,11 +7,13 @@ class Joke extends Component {
     return (
       <div className="Joke">
         <div className="Joke-buttons">
-        <i class="fas fa-arrow-up"></i>
-          <p>{this.props.rating}</p>
-          <i class="fas fa-arrow-down"></i>
+        <i className="fas fa-arrow-up"></i>
+          <span>{this.props.votes}</span>
+          <i className="fas fa-arrow-down"></i>
         </div>
-        <p>{this.props.joke}</p>
+        <div className="Joke-text">
+          {this.props.text}
+        </div>
       </div>
     )
   }

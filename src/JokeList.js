@@ -19,7 +19,7 @@ class JokeList extends Component {
     let jokes = [];
     while(jokes.length < this.props.numJokesToGet){
       let response = await axios.get('https://icanhazdadjoke.com/', {headers: {Accept: 'application/json'}});
-      jokes.push({joke: response.data.joke, votes: 0, id: response.data.id});
+      jokes.push({text: response.data.joke, votes: 0, id: response.data.id});
      
     }
     this.setState({
@@ -29,7 +29,7 @@ class JokeList extends Component {
   
 
   render() {
-    let allJokes = this.state.jokes.map(joke => <Joke rating={joke.votes} joke={joke.joke}/>)
+    let allJokes = this.state.jokes.map(joke => <Joke votes={joke.votes} text={joke.text}/>)
     return (
       <div className="JokeList">
         <div className="JokeList-sidebar">
