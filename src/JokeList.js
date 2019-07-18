@@ -29,26 +29,32 @@ class JokeList extends Component {
   }
 
   async getJokes(){
-    let jokes = [];
-    while(jokes.length < this.props.numJokesToGet){
-      let response = await axios.get('https://icanhazdadjoke.com/', {headers: {Accept: 'application/json'}});
-      let newJoke = response.data.joke;
-      if(!this.seenJokes.has(newJoke)){
-        jokes.push({text: newJoke, votes: 0, id: response.data.id});
-      } else {
-        console.log("found a duplicate! ", newJoke)
+    try {
+      let jokes = [];
+      while(jokes.length < this.props.numJokesToGet){
+        let response = await axios.get('https://icanhazdadjoke.comf/', {headers: {Accept: 'application/json'}});
+        let newJoke = response.data.joke;
+        if(!this.seenJokes.has(newJoke)){
+          jokes.push({text: newJoke, votes: 0, id: response.data.id});
+        } else {
+          console.log("found a duplicate! ", newJoke)
+        }
+        
       }
-      
+      this.setState(st => ({
+        jokes: [...st.jokes, ...jokes],
+        isLoading: false
+      }),
+        // this anon function runs after the state is set
+        // it will save each joke in localStorage
+        () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+      );
+    } catch (error) {
+      alert(error);
+      this.setState({
+        isLoading: false
+      })
     }
-    this.setState(st => ({
-      jokes: [...st.jokes, ...jokes],
-      isLoading: false
-    }),
-      // this anon function runs after the state is set
-      // it will save each joke in localStorage
-      () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
-    );
-    
   }
 
   handleVote(id, change) {
