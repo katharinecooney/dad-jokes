@@ -8,6 +8,7 @@ class Joke extends Component {
     this.handleUpVote = this.handleUpVote.bind(this);
     this.handleDownVote = this.handleDownVote.bind(this);
     this.getColor = this.getColor.bind(this);
+    this.getEmoji = this.getEmoji.bind(this);
   }
 
   handleUpVote(){
@@ -39,6 +40,25 @@ class Joke extends Component {
     }
   }
 
+  getEmoji(){
+    let {votes} = this.props;
+    if(votes >= 15) {
+      return "em em-rolling_on_the_floor_laughing";
+    } else if (votes >= 12) {
+      return "em em-laughing";
+    } else if (votes >= 9) {
+      return "em em-smiley";
+    } else if (votes >= 6) {
+      return "em em-slightly_smiling_face";
+    } else if (votes >= 3) {
+      return "em em-neutral_face";
+    } else if (votes >= 0) {
+      return "em em-confused";
+    } else {
+      return "em em-angry";
+    }
+  }
+
   render() {
     return (
       <div className="Joke">
@@ -51,7 +71,7 @@ class Joke extends Component {
           {this.props.text}
         </div>
         <div className="Joke-smiley">
-          <i class="em em-rolling_on_the_floor_laughing"></i>
+          <i class={this.getEmoji()}></i>
         </div>
       </div>
     )
