@@ -13,6 +13,7 @@ class JokeList extends Component {
     this.state = {
       jokes: []
     }
+    this.handleVote = this.handleVote.bind(this);
   }
 
   async componentDidMount(){
@@ -20,16 +21,29 @@ class JokeList extends Component {
     while(jokes.length < this.props.numJokesToGet){
       let response = await axios.get('https://icanhazdadjoke.com/', {headers: {Accept: 'application/json'}});
       jokes.push({text: response.data.joke, votes: 0, id: response.data.id});
-     
+      
     }
+    
     this.setState({
       jokes: jokes
     })
   }
+
+  handleVote(id, change) {
+    this.setState(st => ({
+      jokes: st.jokes.map( j =>
+        j.id === id ? { ...j, votes: j.votes + change } : j
+      )
+    }))
+  }
   
 
+
+
+
+
   render() {
-    let allJokes = this.state.jokes.map(joke => <Joke votes={joke.votes} text={joke.text}/>)
+    let allJokes = this.state.jokes.map(joke => <Joke key={joke.id} votes={joke.votes} text={joke.text} handleVote={this.handleVote} id={joke.id} upChange={1} downChange={-1}/>)
     return (
       <div className="JokeList">
         <div className="JokeList-sidebar">
