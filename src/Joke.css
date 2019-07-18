@@ -37,6 +37,15 @@
   font-size: 1.5em;
   margin: 10px;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.fa-arrow-up:hover {
+  animation: move-up 0.7s ease-out;
+}
+
+.fa-arrow-down:hover {
+  animation: move-down 0.7s ease-out;
 }
 
 .Joke-smiley {
@@ -44,4 +53,28 @@
   margin-left: auto;
   border-radius: 50%;
   box-shadow: 0 9px 38px rgba(0, 0, 0, 0.3), 0 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes move-up {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  25%,
+  75% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes move-down {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  25%,
+  75% {
+    transform: translateY(3px);
+  }
 }
