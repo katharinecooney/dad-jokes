@@ -14,6 +14,8 @@ class JokeList extends Component {
       jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]"),
       isLoading: false
     }
+    this.seenJokes = new Set(this.state.jokes.map(j => j.text));
+    console.log(this.seenJokes)
     this.handleVote = this.handleVote.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -30,7 +32,13 @@ class JokeList extends Component {
     let jokes = [];
     while(jokes.length < this.props.numJokesToGet){
       let response = await axios.get('https://icanhazdadjoke.com/', {headers: {Accept: 'application/json'}});
-      jokes.push({text: response.data.joke, votes: 0, id: response.data.id});
+      let newJoke = response.data.joke;
+      if(!this.seenJokes.has(newJoke)){
+        jokes.push({text: newJoke, votes: 0, id: response.data.id});
+      } else {
+        console.log("found a duplicate! ", newJoke)
+      }
+      
     }
     this.setState(st => ({
       jokes: [...st.jokes, ...jokes],
