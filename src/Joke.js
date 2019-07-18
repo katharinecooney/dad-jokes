@@ -24,11 +24,14 @@ class Joke extends Component {
       <div className="Joke">
         <div className="Joke-buttons">
         <i className="fas fa-arrow-up" onClick={this.handleUpVote}></i>
-          <span>{this.props.votes}</span>
+          <span className="Joke-votes">{this.props.votes}</span>
           <i className="fas fa-arrow-down" onClick={this.handleDownVote}></i>
         </div>
         <div className="Joke-text">
           {this.props.text}
+        </div>
+        <div className="Joke-smiley">
+          <i class="em em-rolling_on_the_floor_laughing"></i>
         </div>
       </div>
     )
