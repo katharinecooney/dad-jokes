@@ -44,17 +44,6 @@
   animation: move-up 0.7s ease-out;
 }
 
-.fa-arrow-down:hover {
-  animation: move-down 0.7s ease-out;
-}
-
-.Joke-smiley {
-  font-size: 3rem;
-  margin-left: auto;
-  border-radius: 50%;
-  box-shadow: 0 9px 38px rgba(0, 0, 0, 0.3), 0 5px 8px rgba(0, 0, 0, 0.3);
-}
-
 @keyframes move-up {
   0%,
   50%,
@@ -65,6 +54,10 @@
   75% {
     transform: translateY(-3px);
   }
+}
+
+.fa-arrow-down:hover {
+  animation: move-down 0.7s ease-out;
 }
 
 @keyframes move-down {
@@ -78,3 +71,33 @@
     transform: translateY(3px);
   }
 }
+
+.Joke-smiley {
+  font-size: 3rem;
+  margin-left: auto;
+  border-radius: 50%;
+  box-shadow: 0 9px 38px rgba(0, 0, 0, 0.3), 0 5px 8px rgba(0, 0, 0, 0.3);
+}
+
+.Joke-smiley:hover {
+  animation: spin 0.7s ease-in-out;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(20deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
