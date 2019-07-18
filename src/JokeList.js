@@ -11,7 +11,8 @@ class JokeList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]")
+      jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]"),
+      isLoading: false
     }
     this.handleVote = this.handleVote.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -32,7 +33,8 @@ class JokeList extends Component {
       jokes.push({text: response.data.joke, votes: 0, id: response.data.id});
     }
     this.setState(st => ({
-      jokes: [...st.jokes, ...jokes]
+      jokes: [...st.jokes, ...jokes],
+      isLoading: false
     }),
       // this anon function runs after the state is set
       // it will save each joke in localStorage
@@ -54,10 +56,20 @@ class JokeList extends Component {
   }
 
   handleClick(){
-    this.getJokes();
+    this.setState({isLoading: true}, this.getJokes)
   }
 
   render() {
+    if(this.state.isLoading){
+      return (
+        <div className="JokeList-spinner">
+          <i className="far fa-8x fa-laugh fa-spin" />
+          <h1 className="JokeList-title">Loading...</h1>
+        </div> 
+      )
+    }
+
+
     let allJokes = this.state.jokes.map(joke => <Joke key={joke.id} votes={joke.votes} text={joke.text} handleVote={this.handleVote} id={joke.id} upChange={1} downChange={-1}/>)
     return (
       <div className="JokeList">
