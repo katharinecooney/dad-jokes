@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import './JokeList.css'
+import React, { Component } from 'react';
+import axios from 'axios';
+import './JokeList.css';
+import Joke from './Joke';
 
 class JokeList extends Component {
   static defaultProps = {
@@ -18,7 +19,8 @@ class JokeList extends Component {
     let jokes = [];
     while(jokes.length < this.props.numJokesToGet){
       let response = await axios.get('https://icanhazdadjoke.com/', {headers: {Accept: 'application/json'}});
-      jokes.push(response.data.joke);
+      jokes.push({joke: response.data.joke, votes: 0, id: response.data.id});
+     
     }
     this.setState({
       jokes: jokes
@@ -27,7 +29,7 @@ class JokeList extends Component {
   
 
   render() {
-    let allJokes = this.state.jokes.map(joke => <p>{joke}</p>)
+    let allJokes = this.state.jokes.map(joke => <Joke rating={joke.votes} joke={joke.joke}/>)
     return (
       <div className="JokeList">
         <div className="JokeList-sidebar">
