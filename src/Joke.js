@@ -71,7 +71,7 @@ class Joke extends Component {
           {this.props.text}
         </div>
         <div className="Joke-smiley">
-          <i class={this.getEmoji()}></i>
+          <i className={this.getEmoji()}></i>
         </div>
       </div>
     )
