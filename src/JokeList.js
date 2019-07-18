@@ -31,13 +31,14 @@ class JokeList extends Component {
       let response = await axios.get('https://icanhazdadjoke.com/', {headers: {Accept: 'application/json'}});
       jokes.push({text: response.data.joke, votes: 0, id: response.data.id});
     }
-    this.setState({
-      jokes: jokes
-    })
-    window.localStorage.setItem(
-      "jokes",
-      JSON.stringify(jokes)
-    )
+    this.setState(st => ({
+      jokes: [...st.jokes, ...jokes]
+    }),
+      // this anon function runs after the state is set
+      // it will save each joke in localStorage
+      () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+    );
+    
   }
 
   handleVote(id, change) {
@@ -46,9 +47,10 @@ class JokeList extends Component {
         j.id === id ? { ...j, votes: j.votes + change } : j
       )
     }),
-    // this anon function runs after the state is set
-    // it will save the votes for each joke in localStorage
-    () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes)))
+      // this anon function runs after the state is set
+      // it will save the votes for each joke in localStorage
+      () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+    )
   }
 
   handleClick(){
